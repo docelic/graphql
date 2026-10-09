@@ -679,6 +679,19 @@ may nest <code>max_depth</code> levels, 100 by default, and a deeper query is re
 while parsing. Real queries rarely pass twenty levels; the limit exists so a
 hostile query cannot exhaust the stack:</p>
 <pre><code class="language-crystal">context.max_depth <span class="o">=</span> <span class="n">30</span></code></pre>
+<h2><a id="benchmarking" class="anchor" href="#benchmarking">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Benchmarking</h2>
+<p><code>bench/bench.cr</code> runs realistic requests against a schema with an interface, a
+union, an enum, an input object and nesting, and reports throughput per
+scenario. Run it before and after a change, on the same machine, and compare:</p>
+<pre><code class="language-bash">crystal run --release bench/bench.cr -- --json /tmp/before.json
+# make your changes
+crystal run --release bench/bench.cr -- --compare /tmp/before.json</code></pre>
+<p><code>--only NAME</code> runs one scenario and <code>--seconds N</code> changes the time budget per
+scenario. Every response is checked for errors before timing starts.</p>
 <h2><a id="objects" class="anchor" href="#objects">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
