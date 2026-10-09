@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Crystal Docs 1.20.3">
-<meta name="crystal_docs.project_version" content="0.9.0">
+<meta name="crystal_docs.project_version" content="0.9.1">
 <meta name="crystal_docs.project_name" content="graphql">
 
 
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="js/doc.js"></script>
 
   <meta name="repository-name" content="graphql">
-  <title>graphql 0.9.0</title>
+  <title>graphql 0.9.1</title>
   <script type="text/javascript">
   CrystalDocs.base_path = "";
   </script>
@@ -45,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        0.9.0
+        0.9.1
       </span>
     </div>
   </div>
@@ -1000,6 +1000,32 @@ so it's always a good idea to set this argument.</p>
     <span class="s">&quot;Wolf ate sheep&quot;</span>
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
+<h3><a id="values" class="anchor" href="#values">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>values</h3>
+<p>On enums, <code>values</code> describes or deprecates members by constant name:</p>
+<pre><code class="language-crystal">@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Enum</span>(values: {
+  <span class="t">Red</span>:  {description: <span class="s">&quot;Like a rose&quot;</span>},
+  <span class="t">Blue</span>: {deprecated: <span class="s">&quot;Use Navy&quot;</span>},
+})]
+<span class="k">enum</span> <span class="t">Color</span>
+  <span class="t">Red</span>
+  <span class="t">Blue</span>
+  <span class="t">Navy</span>
+<span class="k">end</span></code></pre>
+<h3><a id="specified-by-url" class="anchor" href="#specified-by-url">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>specified_by_url</h3>
+<p>On scalars, <code>specified_by_url</code> points at the specification of the scalar's
+format and is reported as <code>specifiedByURL</code> in introspection:</p>
+<pre><code class="language-crystal">@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Scalar</span>(specified_by_url: <span class="s">&quot;https://tools.ietf.org/html/rfc3339&quot;</span>)]
+record <span class="t">DateTime</span>, value : <span class="t">Time</span> <span class="k">do</span>
+  <span class="c"># ...</span>
+<span class="k">end</span></code></pre>
 <h3><a id="arguments" class="anchor" href="#arguments">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -1007,6 +1033,7 @@ so it's always a good idea to set this argument.</p>
 </a>arguments</h3>
 <p>Sets names and descriptions for field arguments. Note that
 arguments cannot be marked as deprecated.</p>
+<p>Each argument may set <code>name</code>, <code>description</code> and <code>deprecated</code>:</p>
 <pre><code class="language-crystal"><span class="k">class</span> <span class="t">Sheep</span>
   @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>(arguments: {weapon: {name: <span class="s">&quot;weaponName&quot;</span>, description: <span class="s">&quot;The weapon the sheep should use.&quot;</span>}})]
   <span class="k">def</span> <span class="m">fight_wolf</span>(weapon : <span class="t">String</span>) : <span class="t">String</span>

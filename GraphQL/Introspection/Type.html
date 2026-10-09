@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Crystal Docs 1.20.3">
-<meta name="crystal_docs.project_version" content="0.9.0">
+<meta name="crystal_docs.project_version" content="0.9.1">
 <meta name="crystal_docs.project_name" content="graphql">
 
 
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="graphql">
-  <title>GraphQL::Introspection::Type - graphql 0.9.0</title>
+  <title>GraphQL::Introspection::Type - graphql 0.9.1</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -45,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        0.9.0
+        0.9.1
       </span>
     </div>
   </div>
@@ -692,7 +692,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#input_fields%3AArray%28GraphQL%3A%3AIntrospection%3A%3AInputValue%29%7CNil-instance-method" class="signature"><strong>#input_fields</strong> : Array(GraphQL::Introspection::InputValue) | Nil</a>
+        <a href="#input_fields%28include_deprecated%3ABool%3Dfalse%29%3AArray%28GraphQL%3A%3AIntrospection%3A%3AInputValue%29%7CNil-instance-method" class="signature"><strong>#input_fields</strong>(include_deprecated : Bool = <span class="n">false</span>) : Array(GraphQL::Introspection::InputValue) | Nil</a>
         
           <div class="summary"><p>INPUT_OBJECT only</p></div>
         
@@ -702,6 +702,13 @@
         <a href="#interfaces%3AArray%28GraphQL%3A%3AIntrospection%3A%3AType%29%7CNil-instance-method" class="signature"><strong>#interfaces</strong> : Array(GraphQL::Introspection::Type) | Nil</a>
         
           <div class="summary"><p>OBJECT and INTERFACE only</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#is_one_of%3ABool%7CNil-instance-method" class="signature"><strong>#is_one_of</strong> : Bool | Nil</a>
+        
+          <div class="summary"><p>INPUT_OBJECT only</p></div>
         
       </li>
     
@@ -726,6 +733,13 @@
         <a href="#possible_types%3AArray%28GraphQL%3A%3AIntrospection%3A%3AType%29%7CNil-instance-method" class="signature"><strong>#possible_types</strong> : Array(GraphQL::Introspection::Type) | Nil</a>
         
           <div class="summary"><p>INTERFACE and UNION only</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#specified_by_url%3AString%7CNil-instance-method" class="signature"><strong>#specified_by_url</strong> : String | Nil</a>
+        
+          <div class="summary"><p>SCALAR only</p></div>
         
       </li>
     
@@ -892,12 +906,12 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="input_fields:Array(GraphQL::Introspection::InputValue)|Nil-instance-method">
+    <div class="entry-detail" id="input_fields(include_deprecated:Bool=false):Array(GraphQL::Introspection::InputValue)|Nil-instance-method">
       <div class="signature">
         
-        def <strong>input_fields</strong> : Array(<a href="../../GraphQL/Introspection/InputValue.html">GraphQL::Introspection::InputValue</a>) | Nil
+        def <strong>input_fields</strong>(include_deprecated : Bool = <span class="n">false</span>) : Array(<a href="../../GraphQL/Introspection/InputValue.html">GraphQL::Introspection::InputValue</a>) | Nil
 
-        <a class="method-permalink" href="#input_fields%3AArray%28GraphQL%3A%3AIntrospection%3A%3AInputValue%29%7CNil-instance-method">#</a>
+        <a class="method-permalink" href="#input_fields%28include_deprecated%3ABool%3Dfalse%29%3AArray%28GraphQL%3A%3AIntrospection%3A%3AInputValue%29%7CNil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -922,6 +936,25 @@
         <div class="doc">
           
           <p>OBJECT and INTERFACE only</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="is_one_of:Bool|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>is_one_of</strong> : Bool | Nil
+
+        <a class="method-permalink" href="#is_one_of%3ABool%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>INPUT_OBJECT only</p>
         </div>
       
       <br/>
@@ -988,6 +1021,25 @@
         <div class="doc">
           
           <p>INTERFACE and UNION only</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="specified_by_url:String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>specified_by_url</strong> : String | Nil
+
+        <a class="method-permalink" href="#specified_by_url%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>SCALAR only</p>
         </div>
       
       <br/>
