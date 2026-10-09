@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Crystal Docs 1.20.3">
-<meta name="crystal_docs.project_version" content="0.5.3">
+<meta name="crystal_docs.project_version" content="0.6.0">
 <meta name="crystal_docs.project_name" content="graphql">
 
 
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="graphql">
-  <title>GraphQL::Context - graphql 0.5.3</title>
+  <title>GraphQL::Context - graphql 0.6.0</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -45,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        0.5.3
+        0.6.0
       </span>
     </div>
   </div>
@@ -572,10 +572,14 @@
       <li class="entry-summary">
         <a href="#complexity%3AInt32-instance-method" class="signature"><strong>#complexity</strong> : Int32</a>
         
+          <div class="summary"><p>Number of fields the executed operation selected, filled in by <code><a href="../GraphQL/Schema.html#execute%28query%3AString%2Cvariables%3AHash%28String%2CJSON%3A%3AAny%29%7CNil%3Dnil%2Coperation_name%3AString%7CNil%3Dnil%2Ccontext%3DContext.new%29%3AString-instance-method">Schema#execute</a></code> before resolution starts.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#complexity%3D%28complexity%3AInt32%29-instance-method" class="signature"><strong>#complexity=</strong>(complexity : Int32)</a>
+        
+          <div class="summary"><p>Number of fields the executed operation selected, filled in by <code><a href="../GraphQL/Schema.html#execute%28query%3AString%2Cvariables%3AHash%28String%2CJSON%3A%3AAny%29%7CNil%3Dnil%2Coperation_name%3AString%7CNil%3Dnil%2Ccontext%3DContext.new%29%3AString-instance-method">Schema#execute</a></code> before resolution starts.</p></div>
         
       </li>
     
@@ -616,10 +620,14 @@
       <li class="entry-summary">
         <a href="#max_complexity%3AInt32%7CNil-instance-method" class="signature"><strong>#max_complexity</strong> : Int32 | Nil</a>
         
+          <div class="summary"><p>Maximum number of fields a single operation may select, counted statically across the whole selection tree with fragments expanded.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#max_complexity%3D%28max_complexity%3AInt32%7CNil%29-instance-method" class="signature"><strong>#max_complexity=</strong>(max_complexity : Int32 | Nil)</a>
+        
+          <div class="summary"><p>Maximum number of fields a single operation may select, counted statically across the whole selection tree with fragments expanded.</p></div>
         
       </li>
     
@@ -715,6 +723,12 @@
         <a class="method-permalink" href="#complexity%3AInt32-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Number of fields the executed operation selected, filled in by
+<code><a href="../GraphQL/Schema.html#execute%28query%3AString%2Cvariables%3AHash%28String%2CJSON%3A%3AAny%29%7CNil%3Dnil%2Coperation_name%3AString%7CNil%3Dnil%2Ccontext%3DContext.new%29%3AString-instance-method">Schema#execute</a></code> before resolution starts.</p>
+        </div>
+      
       <br/>
       <div>
         
@@ -728,6 +742,12 @@
 
         <a class="method-permalink" href="#complexity%3D%28complexity%3AInt32%29-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Number of fields the executed operation selected, filled in by
+<code><a href="../GraphQL/Schema.html#execute%28query%3AString%2Cvariables%3AHash%28String%2CJSON%3A%3AAny%29%7CNil%3Dnil%2Coperation_name%3AString%7CNil%3Dnil%2Ccontext%3DContext.new%29%3AString-instance-method">Schema#execute</a></code> before resolution starts.</p>
+        </div>
       
       <br/>
       <div>
@@ -838,6 +858,14 @@ finished.</p>
         <a class="method-permalink" href="#max_complexity%3AInt32%7CNil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Maximum number of fields a single operation may select, counted
+statically across the whole selection tree with fragments expanded.
+<code>nil</code> (the default) disables the check. An operation that exceeds the
+limit is rejected before any resolver runs.</p>
+        </div>
+      
       <br/>
       <div>
         
@@ -851,6 +879,14 @@ finished.</p>
 
         <a class="method-permalink" href="#max_complexity%3D%28max_complexity%3AInt32%7CNil%29-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Maximum number of fields a single operation may select, counted
+statically across the whole selection tree with fragments expanded.
+<code>nil</code> (the default) disables the check. An operation that exceeds the
+limit is rejected before any resolver runs.</p>
+        </div>
       
       <br/>
       <div>

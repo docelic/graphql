@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Crystal Docs 1.20.3">
-<meta name="crystal_docs.project_version" content="0.5.3">
+<meta name="crystal_docs.project_version" content="0.6.0">
 <meta name="crystal_docs.project_name" content="graphql">
 
 
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="js/doc.js"></script>
 
   <meta name="repository-name" content="graphql">
-  <title>graphql 0.5.3</title>
+  <title>graphql 0.6.0</title>
   <script type="text/javascript">
   CrystalDocs.base_path = "";
   </script>
@@ -45,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        0.5.3
+        0.6.0
       </span>
     </div>
   </div>
@@ -603,6 +603,20 @@ once. When the budget is used up, remaining work runs inline, so a large
 list never fans out into an unbounded number of fibers. Choose a value your
 downstream resources can sustain; resolvers that check out database
 connections should stay below the connection pool size.</p>
+<h2><a id="complexity" class="anchor" href="#complexity">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Complexity</h2>
+<p>To reject operations that select too many fields, set <code>max_complexity</code> on the
+context:</p>
+<pre><code class="language-crystal">context <span class="o">=</span> <span class="t">MyContext</span>.new(<span class="t">Math</span><span class="t">::</span><span class="t">PI</span>)
+context.max_complexity <span class="o">=</span> <span class="n">200</span>
+schema.execute(query, variables, operation_name, context)</code></pre>
+<p>Complexity is the number of fields the operation selects, counted across the
+whole selection tree with fragments expanded. It is computed before any
+resolver runs, and an operation over the limit is answered with an error and
+no data. After execution, <code>context.complexity</code> holds the count.</p>
 <h2><a id="objects" class="anchor" href="#objects">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
