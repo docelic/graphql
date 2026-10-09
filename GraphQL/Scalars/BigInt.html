@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Crystal Docs 1.20.3">
-<meta name="crystal_docs.project_version" content="0.7.0">
+<meta name="crystal_docs.project_version" content="0.7.1">
 <meta name="crystal_docs.project_name" content="graphql">
 
 
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="graphql">
-  <title>GraphQL::Scalars::BigInt - graphql 0.7.0</title>
+  <title>GraphQL::Scalars::BigInt - graphql 0.7.1</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -45,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        0.7.0
+        0.7.1
       </span>
     </div>
   </div>
@@ -599,6 +599,8 @@
       <li class="entry-summary">
         <a href="#from_json%28string_or_io%29-class-method" class="signature"><strong>.from_json</strong>(string_or_io)</a>
         
+          <div class="summary"><p>Accepts both integer literals and strings, since clients commonly send values beyond 64 bits as strings.</p></div>
+        
       </li>
     
   </ul>
@@ -749,6 +751,12 @@
 
         <a class="method-permalink" href="#from_json%28string_or_io%29-class-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Accepts both integer literals and strings, since clients commonly send
+values beyond 64 bits as strings.</p>
+        </div>
       
       <br/>
       <div>

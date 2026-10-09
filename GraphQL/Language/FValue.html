@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Crystal Docs 1.20.3">
-<meta name="crystal_docs.project_version" content="0.7.0">
+<meta name="crystal_docs.project_version" content="0.7.1">
 <meta name="crystal_docs.project_name" content="graphql">
 
 
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="graphql">
-  <title>GraphQL::Language::FValue - graphql 0.7.0</title>
+  <title>GraphQL::Language::FValue - graphql 0.7.1</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -45,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        0.7.0
+        0.7.1
       </span>
     </div>
   </div>
@@ -516,6 +516,18 @@
 
 
 
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Integer literals that do not fit an <code>Int32</code> are kept as <code>BigInt</code> so custom
+scalars can accept them; the <code>Int</code> type rejects them during coercion.</p>
+
 
 
   <h2>
@@ -526,7 +538,7 @@
 </a>
     Alias Definition
   </h2>
-  <code>Array(<a href="../../GraphQL/Language/FValue.html">GraphQL::Language::FValue</a>) | Bool | Float64 | <a href="../../GraphQL/Language/ASTNode.html">GraphQL::Language::ASTNode</a> | Hash(String, <a href="../../GraphQL/Language/FValue.html">GraphQL::Language::FValue</a>) | Int32 | String | Nil</code>
+  <code>Array(<a href="../../GraphQL/Language/FValue.html">GraphQL::Language::FValue</a>) | BigInt | Bool | Float64 | <a href="../../GraphQL/Language/ASTNode.html">GraphQL::Language::ASTNode</a> | Hash(String, <a href="../../GraphQL/Language/FValue.html">GraphQL::Language::FValue</a>) | Int32 | String | Nil</code>
 
 
 
