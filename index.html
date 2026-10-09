@@ -952,7 +952,8 @@ ws <span class="s">&quot;/graphql&quot;</span> <span class="k">do</span> <span c
   <span class="t">GraphQL</span><span class="t">::</span><span class="t">Transport</span><span class="t">::</span><span class="t">WebSocket</span>.new(schema, socket) { <span class="t">MyContext</span>.new(env) }
 <span class="k">end</span></code></pre>
 <p>With the standard library's <code>HTTP::Server</code>, pass the protocol name so the
-handshake negotiates it, which browsers require:</p>
+handshake negotiates it, which browsers require. The subprotocol argument
+needs Crystal 1.20 or later:</p>
 <pre><code class="language-crystal"><span class="t">HTTP</span><span class="t">::</span><span class="t">WebSocketHandler</span>.new([<span class="t">GraphQL</span><span class="t">::</span><span class="t">Transport</span><span class="t">::</span><span class="t">WebSocket</span><span class="t">::</span><span class="t">PROTOCOL</span>]) <span class="k">do</span> <span class="o">|</span>socket, http<span class="o">|</span>
   <span class="t">GraphQL</span><span class="t">::</span><span class="t">Transport</span><span class="t">::</span><span class="t">WebSocket</span>.new(schema, socket) { <span class="t">MyContext</span>.new(http.request) }
 <span class="k">end</span></code></pre>
