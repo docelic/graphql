@@ -825,6 +825,10 @@ It must define a constructor with a <code><a href="GraphQL/Field.html">GraphQL::
     builder.scalar(@value.reverse)
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
+<p>A custom scalar's <code>to_json</code> is rendered into a buffer, so an exception in it
+only affects that field. The library's built-in scalars are written straight
+into the response instead; if you reopen one of them and its <code>to_json</code> raises,
+the enclosing object becomes null and the error is reported there.</p>
 <h2><a id="interfaces" class="anchor" href="#interfaces">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -990,11 +994,11 @@ type. This is not needed in most situations because type names are automatically
 converted to PascalCase or camelCase. However, <code>item_id</code> converts to
 <code>itemId</code>, but we might want to use <code>itemID</code>. For this, we can use the <code>name</code>
 argument.</p>
-<pre><code class="language-crystal">@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Object</span>(name: <span class="s">&quot;Sheep&quot;</span>)]
-<span class="k">class</span> <span class="t">Wolf</span>
-  @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>(name: <span class="s">&quot;baa&quot;</span>)]
-  <span class="k">def</span> <span class="m">howl</span> : <span class="t">String</span>
-    <span class="s">&quot;baa&quot;</span>
+<pre><code class="language-crystal">@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Object</span>(name: <span class="s">&quot;Greeter&quot;</span>)]
+<span class="k">class</span> <span class="t">GreetingService</span>
+  @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>(name: <span class="s">&quot;hello&quot;</span>)]
+  <span class="k">def</span> <span class="m">say_hello</span> : <span class="t">String</span>
+    <span class="s">&quot;Hello&quot;</span>
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
 <h3><a id="description" class="anchor" href="#description">
@@ -1005,8 +1009,8 @@ argument.</p>
 <p>Supported on: <code>Object</code>, <code>InputObject</code>, <code>Field</code>, <code>Enum</code>, <code>Scalar</code></p>
 <p>Describes the type. Descriptions are available through the introspection interface
 so it's always a good idea to set this argument.</p>
-<pre><code class="language-crystal">@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Object</span>(description: <span class="s">&quot;I&#39;m a sheep, I promise!&quot;</span>)]
-<span class="k">class</span> <span class="t">Wolf</span>
+<pre><code class="language-crystal">@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Object</span>(description: <span class="s">&quot;Produces greetings in several languages&quot;</span>)]
+<span class="k">class</span> <span class="t">Greeter</span>
 <span class="k">end</span></code></pre>
 <h3><a id="deprecated" class="anchor" href="#deprecated">
   <svg class="octicon-link" aria-hidden="true">
@@ -1015,10 +1019,10 @@ so it's always a good idea to set this argument.</p>
 </a>deprecated</h3>
 <p>Supported on: <code>Field</code></p>
 <p>The deprecated argument marks a type as deprecated.</p>
-<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Sheep</span>
-  @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>(deprecated: <span class="s">&quot;This was a bad idea.&quot;</span>)]
-  <span class="k">def</span> <span class="m">fight_wolf</span> : <span class="t">String</span>
-    <span class="s">&quot;Wolf ate sheep&quot;</span>
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Greeter</span>
+  @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>(deprecated: <span class="s">&quot;Use greet(lang:) instead&quot;</span>)]
+  <span class="k">def</span> <span class="m">hello</span> : <span class="t">String</span>
+    <span class="s">&quot;Hello&quot;</span>
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
 <h3><a id="values" class="anchor" href="#values">
@@ -1054,13 +1058,16 @@ record <span class="t">DateTime</span>, value : <span class="t">Time</span> <spa
 </a>arguments</h3>
 <p>Sets names, descriptions and deprecations for field arguments. Each argument
 may set <code>name</code>, <code>description</code> and <code>deprecated</code>:</p>
-<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Sheep</span>
-  @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>(arguments: {weapon: {name: <span class="s">&quot;weaponName&quot;</span>, description: <span class="s">&quot;The weapon the sheep should use.&quot;</span>}})]
-  <span class="k">def</span> <span class="m">fight_wolf</span>(weapon : <span class="t">String</span>) : <span class="t">String</span>
-    <span class="k">if</span> weapon <span class="o">==</span> <span class="s">&quot;Atomic Bomb&quot;</span>
-      <span class="s">&quot;Sheep killed wolf&quot;</span>
-    <span class="k">else</span>
-      <span class="s">&quot;Wolf ate sheep&quot;</span>
+<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Greeter</span>
+  @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>(arguments: {
+    language: {name: <span class="s">&quot;lang&quot;</span>, description: <span class="s">&quot;Language code of the greeting&quot;</span>},
+    formal:   {deprecated: <span class="s">&quot;Greetings are always informal now&quot;</span>},
+  })]
+  <span class="k">def</span> <span class="m">greet</span>(language : <span class="t">String</span>, formal : <span class="t">Bool</span>? <span class="o">=</span> <span class="n">nil</span>) : <span class="t">String</span>
+    <span class="k">case</span> language
+    <span class="k">when</span> <span class="s">&quot;fr&quot;</span> <span class="k">then</span> <span class="s">&quot;Bonjour&quot;</span>
+    <span class="k">when</span> <span class="s">&quot;de&quot;</span> <span class="k">then</span> <span class="s">&quot;Hallo&quot;</span>
+    <span class="k">else</span>           <span class="s">&quot;Hello&quot;</span>
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
