@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Crystal Docs 1.20.3">
-<meta name="crystal_docs.project_version" content="0.9.1">
+<meta name="crystal_docs.project_version" content="0.9.2">
 <meta name="crystal_docs.project_name" content="graphql">
 
 
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="graphql">
-  <title>GraphQL::Language::Parser - graphql 0.9.1</title>
+  <title>GraphQL::Language::Parser - graphql 0.9.2</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -45,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        0.9.1
+        0.9.2
       </span>
     </div>
   </div>
@@ -642,17 +642,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#max_nesting%3AInt32-instance-method" class="signature"><strong>#max_nesting</strong> : Int32</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#max_nesting%3D%28max_nesting%3AInt32%29-instance-method" class="signature"><strong>#max_nesting=</strong>(max_nesting : Int32)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#parse%28source%3AString%29%3ALanguage%3A%3ADocument-instance-method" class="signature"><strong>#parse</strong>(source : String) : Language::Document</a>
+        <a href="#parse%28source%3AString%2Cmax_depth%3AInt32%3DLanguage%3A%3ADEFAULT_MAX_DEPTH%29%3ALanguage%3A%3ADocument-instance-method" class="signature"><strong>#parse</strong>(source : String, max_depth : Int32 = <span class="t">Language</span><span class="t">::</span><span class="t">DEFAULT_MAX_DEPTH</span>) : Language::Document</a>
         
       </li>
     
@@ -730,40 +720,12 @@
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="max_nesting:Int32-instance-method">
+    <div class="entry-detail" id="parse(source:String,max_depth:Int32=Language::DEFAULT_MAX_DEPTH):Language::Document-instance-method">
       <div class="signature">
         
-        def <strong>max_nesting</strong> : Int32
+        def <strong>parse</strong>(source : String, max_depth : Int32 = <span class="t">Language</span><span class="t">::</span><span class="t">DEFAULT_MAX_DEPTH</span>) : <a href="../../GraphQL/Language/Document.html">Language::Document</a>
 
-        <a class="method-permalink" href="#max_nesting%3AInt32-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="max_nesting=(max_nesting:Int32)-instance-method">
-      <div class="signature">
-        
-        def <strong>max_nesting=</strong>(max_nesting : Int32)
-
-        <a class="method-permalink" href="#max_nesting%3D%28max_nesting%3AInt32%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="parse(source:String):Language::Document-instance-method">
-      <div class="signature">
-        
-        def <strong>parse</strong>(source : String) : <a href="../../GraphQL/Language/Document.html">Language::Document</a>
-
-        <a class="method-permalink" href="#parse%28source%3AString%29%3ALanguage%3A%3ADocument-instance-method">#</a>
+        <a class="method-permalink" href="#parse%28source%3AString%2Cmax_depth%3AInt32%3DLanguage%3A%3ADEFAULT_MAX_DEPTH%29%3ALanguage%3A%3ADocument-instance-method">#</a>
       </div>
       
       <br/>

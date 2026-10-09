@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Crystal Docs 1.20.3">
-<meta name="crystal_docs.project_version" content="0.9.1">
+<meta name="crystal_docs.project_version" content="0.9.2">
 <meta name="crystal_docs.project_name" content="graphql">
 
 
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="js/doc.js"></script>
 
   <meta name="repository-name" content="graphql">
-  <title>graphql 0.9.1</title>
+  <title>graphql 0.9.2</title>
   <script type="text/javascript">
   CrystalDocs.base_path = "";
   </script>
@@ -45,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        0.9.1
+        0.9.2
       </span>
     </div>
   </div>
@@ -672,6 +672,11 @@ schema.execute(query, variables, operation_name, context)</code></pre>
 whole selection tree with fragments expanded. It is computed before any
 resolver runs, and an operation over the limit is answered with an error and
 no data. After execution, <code>context.complexity</code> holds the count.</p>
+<p>Nesting depth is limited separately. Selection sets, lists and input objects
+may nest <code>max_depth</code> levels, 100 by default, and a deeper query is rejected
+while parsing. Real queries rarely pass twenty levels; the limit exists so a
+hostile query cannot exhaust the stack:</p>
+<pre><code class="language-crystal">context.max_depth <span class="o">=</span> <span class="n">30</span></code></pre>
 <h2><a id="objects" class="anchor" href="#objects">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>

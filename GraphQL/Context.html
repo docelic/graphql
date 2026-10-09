@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Crystal Docs 1.20.3">
-<meta name="crystal_docs.project_version" content="0.9.1">
+<meta name="crystal_docs.project_version" content="0.9.2">
 <meta name="crystal_docs.project_name" content="graphql">
 
 
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="graphql">
-  <title>GraphQL::Context - graphql 0.9.1</title>
+  <title>GraphQL::Context - graphql 0.9.2</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -45,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        0.9.1
+        0.9.2
       </span>
     </div>
   </div>
@@ -701,6 +701,20 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#max_depth%3AInt32-instance-method" class="signature"><strong>#max_depth</strong> : Int32</a>
+        
+          <div class="summary"><p>Maximum nesting of selection sets, lists and input objects a query may have.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#max_depth%3D%28max_depth%3AInt32%29-instance-method" class="signature"><strong>#max_depth=</strong>(max_depth : Int32)</a>
+        
+          <div class="summary"><p>Maximum nesting of selection sets, lists and input objects a query may have.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#mutation_type%3AString%7CNil-instance-method" class="signature"><strong>#mutation_type</strong> : String | Nil</a>
         
       </li>
@@ -1007,6 +1021,50 @@ fan out into an unbounded number of fibers.</p>
 <p>Pick a value that your downstream resources can sustain. For example,
 resolvers that check out database connections should stay below the
 connection pool size.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="max_depth:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>max_depth</strong> : Int32
+
+        <a class="method-permalink" href="#max_depth%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Maximum nesting of selection sets, lists and input objects a query may
+have. Parsing stops with an error beyond it. The default of 100 is far
+above what real queries use, and protects the process: nesting a few
+thousand levels deep would otherwise overflow the stack.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="max_depth=(max_depth:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>max_depth=</strong>(max_depth : Int32)
+
+        <a class="method-permalink" href="#max_depth%3D%28max_depth%3AInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Maximum nesting of selection sets, lists and input objects a query may
+have. Parsing stops with an error beyond it. The default of 100 is far
+above what real queries use, and protects the process: nesting a few
+thousand levels deep would otherwise overflow the stack.</p>
         </div>
       
       <br/>
