@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Crystal Docs 1.20.3">
-<meta name="crystal_docs.project_version" content="0.8.0">
+<meta name="crystal_docs.project_version" content="0.9.0">
 <meta name="crystal_docs.project_name" content="graphql">
 
 
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="js/doc.js"></script>
 
   <meta name="repository-name" content="graphql">
-  <title>graphql 0.8.0</title>
+  <title>graphql 0.9.0</title>
   <script type="text/javascript">
   CrystalDocs.base_path = "";
   </script>
@@ -45,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        0.8.0
+        0.9.0
       </span>
     </div>
   </div>
@@ -84,6 +84,16 @@
   
   <li class=" " data-id="graphql/GraphQL/BaseScalar" data-name="graphql::basescalar">
       <a href="GraphQL/BaseScalar.html">BaseScalar</a>
+      
+    </li>
+  
+  <li class=" " data-id="graphql/GraphQL/BaseSubscription" data-name="graphql::basesubscription">
+      <a href="GraphQL/BaseSubscription.html">BaseSubscription</a>
+      
+    </li>
+  
+  <li class=" " data-id="graphql/GraphQL/Broadcast" data-name="graphql::broadcast(t)">
+      <a href="GraphQL/Broadcast.html">Broadcast</a>
       
     </li>
   
@@ -502,6 +512,31 @@
       
     </li>
   
+  <li class=" " data-id="graphql/GraphQL/Subscription" data-name="graphql::subscription">
+      <a href="GraphQL/Subscription.html">Subscription</a>
+      
+    </li>
+  
+  <li class=" " data-id="graphql/GraphQL/SubscriptionType" data-name="graphql::subscriptiontype">
+      <a href="GraphQL/SubscriptionType.html">SubscriptionType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="graphql/GraphQL/Transport" data-name="graphql::transport">
+      <a href="GraphQL/Transport.html">Transport</a>
+      
+        <ul>
+  
+  <li class=" " data-id="graphql/GraphQL/Transport/WebSocket" data-name="graphql::transport::websocket">
+      <a href="GraphQL/Transport/WebSocket.html">WebSocket</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class=" " data-id="graphql/GraphQL/TypeError" data-name="graphql::typeerror">
       <a href="GraphQL/TypeError.html">TypeError</a>
       
@@ -861,7 +896,63 @@ selections on it must go through type conditions:</p>
     <use href="#octicon-link"/>
   </svg>
 </a>Subscriptions</h2>
-<p>Subscriptions are not supported.</p>
+<p>A subscription type inherits <code><a href="GraphQL/BaseSubscription.html">GraphQL::BaseSubscription</a></code>. Its fields return a
+<code>Channel</code> whose element type is the field's GraphQL type, and every value sent
+on the channel becomes one response. <code><a href="GraphQL/Broadcast.html">GraphQL::Broadcast</a></code> fans values out to
+any number of subscribers, which is the usual way to publish from a mutation:</p>
+<pre><code class="language-crystal"><span class="t">MESSAGES</span> <span class="o">=</span> <span class="t">GraphQL</span><span class="t">::</span><span class="t">Broadcast</span>(<span class="t">Message</span>).new
+
+@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Object</span>]
+<span class="k">class</span> <span class="t">Mutation</span> <span class="o">&lt;</span> <span class="t">GraphQL</span><span class="t">::</span><span class="t">BaseMutation</span>
+  @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>]
+  <span class="k">def</span> <span class="m">post</span>(text : <span class="t">String</span>) : <span class="t">Message</span>
+    message <span class="o">=</span> <span class="t">Message</span>.new(text)
+    <span class="t">MESSAGES</span>.publish(message)
+    message
+  <span class="k">end</span>
+<span class="k">end</span>
+
+@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Object</span>]
+<span class="k">class</span> <span class="t">Subscription</span> <span class="o">&lt;</span> <span class="t">GraphQL</span><span class="t">::</span><span class="t">BaseSubscription</span>
+  @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>]
+  <span class="k">def</span> <span class="m">message_added</span> : <span class="t">Channel</span>(<span class="t">Message</span>)
+    <span class="t">MESSAGES</span>.subscribe
+  <span class="k">end</span>
+<span class="k">end</span>
+
+schema <span class="o">=</span> <span class="t">GraphQL</span><span class="t">::</span><span class="t">Schema</span>.new(<span class="t">Query</span>.new, <span class="t">Mutation</span>.new, <span class="t">Subscription</span>.new)</code></pre>
+<p><code>schema.subscribe</code> takes the same arguments as <code>schema.execute</code> and returns a
+<code><a href="GraphQL/Subscription.html">GraphQL::Subscription</a></code> that yields response documents. It ends when the
+resolver's channel closes. Call <code>close</code> to unsubscribe, which also closes the
+resolver's channel:</p>
+<pre><code class="language-crystal">subscription <span class="o">=</span> schema.subscribe(<span class="s">%(subscription { messageAdded { text } })</span>)
+spawn <span class="k">do</span>
+  subscription.each <span class="k">do</span> <span class="o">|</span>response<span class="o">|</span>
+    puts response <span class="c"># {&quot;data&quot;:{&quot;messageAdded&quot;:{&quot;text&quot;:&quot;hi&quot;}}}</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+<p>A request that cannot be started, for example because it selects two root
+fields, yields a single error response and is already closed.</p>
+<h3><a id="over-web-sockets" class="anchor" href="#over-web-sockets">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Over WebSockets</h3>
+<p><code><a href="GraphQL/Transport/WebSocket.html">GraphQL::Transport::WebSocket</a></code> speaks the <code>graphql-transport-ws</code> protocol
+used by graphql-ws, Apollo Client, urql and Relay. It is not loaded by
+<code>require &quot;graphql&quot;</code>. With Kemal:</p>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;graphql/transport/ws&quot;</span>
+
+ws <span class="s">&quot;/graphql&quot;</span> <span class="k">do</span> <span class="o">|</span>socket, env<span class="o">|</span>
+  <span class="t">GraphQL</span><span class="t">::</span><span class="t">Transport</span><span class="t">::</span><span class="t">WebSocket</span>.new(schema, socket) { <span class="t">MyContext</span>.new(env) }
+<span class="k">end</span></code></pre>
+<p>With the standard library's <code>HTTP::Server</code>, pass the protocol name so the
+handshake negotiates it, which browsers require:</p>
+<pre><code class="language-crystal"><span class="t">HTTP</span><span class="t">::</span><span class="t">WebSocketHandler</span>.new([<span class="t">GraphQL</span><span class="t">::</span><span class="t">Transport</span><span class="t">::</span><span class="t">WebSocket</span><span class="t">::</span><span class="t">PROTOCOL</span>]) <span class="k">do</span> <span class="o">|</span>socket, http<span class="o">|</span>
+  <span class="t">GraphQL</span><span class="t">::</span><span class="t">Transport</span><span class="t">::</span><span class="t">WebSocket</span>.new(schema, socket) { <span class="t">MyContext</span>.new(http.request) }
+<span class="k">end</span></code></pre>
+<p>The block builds the context for every operation on the connection. Queries
+and mutations sent over the socket are executed once.</p>
 <h2><a id="annotation-arguments" class="anchor" href="#annotation-arguments">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>

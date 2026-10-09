@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="graphql">
-  <title>GraphQL::Language::InputObject - graphql 0.9.0</title>
+  <title>GraphQL::Transport::WebSocket - graphql 0.9.0</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -207,7 +207,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="graphql/GraphQL/Language" data-name="graphql::language">
+  <li class="parent " data-id="graphql/GraphQL/Language" data-name="graphql::language">
       <a href="../../GraphQL/Language.html">Language</a>
       
         <ul>
@@ -292,7 +292,7 @@
       
     </li>
   
-  <li class=" current" data-id="graphql/GraphQL/Language/InputObject" data-name="graphql::language::inputobject">
+  <li class=" " data-id="graphql/GraphQL/Language/InputObject" data-name="graphql::language::inputobject">
       <a href="../../GraphQL/Language/InputObject.html">InputObject</a>
       
     </li>
@@ -522,12 +522,12 @@
       
     </li>
   
-  <li class="parent " data-id="graphql/GraphQL/Transport" data-name="graphql::transport">
+  <li class="parent open current" data-id="graphql/GraphQL/Transport" data-name="graphql::transport">
       <a href="../../GraphQL/Transport.html">Transport</a>
       
         <ul>
   
-  <li class=" " data-id="graphql/GraphQL/Transport/WebSocket" data-name="graphql::transport::websocket">
+  <li class=" current" data-id="graphql/GraphQL/Transport/WebSocket" data-name="graphql::transport::websocket">
       <a href="../../GraphQL/Transport/WebSocket.html">WebSocket</a>
       
     </li>
@@ -563,15 +563,37 @@
 
   <span class="kind">
     class
-  </span> GraphQL::<wbr>Language::<wbr>InputObject
+  </span> GraphQL::<wbr>Transport::<wbr>WebSocket
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../GraphQL/Language/InputObject.html">GraphQL::Language::InputObject</a></li><li class="superclass"><a href="../../GraphQL/Language/ASTNode.html">GraphQL::Language::ASTNode</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../GraphQL/Transport/WebSocket.html">GraphQL::Transport::WebSocket</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Serves a schema over a WebSocket with the <code>graphql-transport-ws</code>
+protocol used by graphql-ws, Apollo Client, urql and Relay. Not
+required by <code>require &quot;graphql&quot;</code>; load it with
+<code>require &quot;graphql/transport/ws&quot;</code>.</p>
+<p>Hand each accepted socket to a new instance. The block builds the
+<code><a href="../../GraphQL/Context.html">GraphQL::Context</a></code> for every operation on the connection:</p>
+<pre><code class="language-crystal">handler <span class="o">=</span> <span class="t">HTTP</span><span class="t">::</span><span class="t">WebSocketHandler</span>.new([<span class="t">GraphQL</span><span class="t">::</span><span class="t">Transport</span><span class="t">::</span><span class="t">WebSocket</span><span class="t">::</span><span class="t">PROTOCOL</span>]) <span class="k">do</span> <span class="o">|</span>socket, http<span class="o">|</span>
+  <span class="t">GraphQL</span><span class="t">::</span><span class="t">Transport</span><span class="t">::</span><span class="t">WebSocket</span>.new(schema, socket) { <span class="t">MyContext</span>.new(http.request) }
+<span class="k">end</span></code></pre>
+<p>Subscriptions stream until the client sends <code>complete</code> or disconnects.
+Queries and mutations sent over the socket are executed once and
+answered with <code>next</code> and <code>complete</code>.</p>
 
 
 
@@ -598,12 +620,31 @@
   </h2>
   
     
-      graphql/language/nodes.cr
+      graphql/transport/ws.cr
     
     <br/>
   
 
 
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="PROTOCOL">
+        <strong>PROTOCOL</strong> = <code><span class="s">&quot;graphql-transport-ws&quot;</span></code>
+      </dt>
+      
+    
+  </dl>
 
 
 
@@ -619,7 +660,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28arguments%2C%2A%2Arest%29-class-method" class="signature"><strong>.new</strong>(arguments, **rest)</a>
+        <a href="#new%28schema%3AGraphQL%3A%3ASchema%2Csocket%3AHTTP%3A%3AWebSocket%2C%26context%3A-%3EGraphQL%3A%3AContext%29-class-method" class="signature"><strong>.new</strong>(schema : GraphQL::Schema, socket : HTTP::WebSocket, &context :  -> GraphQL::Context)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28schema%3AGraphQL%3A%3ASchema%2Csocket%3AHTTP%3A%3AWebSocket%29-class-method" class="signature"><strong>.new</strong>(schema : GraphQL::Schema, socket : HTTP::WebSocket)</a>
         
       </li>
     
@@ -631,127 +677,9 @@
   
 
   
-  <h2>
-    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#%3D%3D%28other%3Aself%29-instance-method" class="signature"><strong>#==</strong>(other : <span class="k">self</span>)</a>
-        
-          <div class="summary"><p>Returns <code>true</code> if this reference is the same as <em>other</em>.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#arguments%3AArray%28Argument%29-instance-method" class="signature"><strong>#arguments</strong> : Array(Argument)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#arguments%3D%28arguments%3AArray%28Argument%29%29-instance-method" class="signature"><strong>#arguments=</strong>(arguments : Array(Argument))</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#children-instance-method" class="signature"><strong>#children</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#hash%28hasher%29-instance-method" class="signature"><strong>#hash</strong>(hasher)</a>
-        
-          <div class="summary"><p>See <code>Object#hash(hasher)</code></p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#to_h-instance-method" class="signature"><strong>#to_h</strong></a>
-        
-          <div class="summary"><p>@return [Hash&lt;String, Any&gt;] Recursively turn this input object into a Ruby Hash</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#to_value-instance-method" class="signature"><strong>#to_value</strong></a>
-        
-      </li>
-    
-  </ul>
-
 
 
   <div class="methods-inherited">
-    
-      
-
-  <h3>Instance methods inherited from class <code><a href="../../GraphQL/Language/ASTNode.html">GraphQL::Language::ASTNode</a></code></h3>
-  
-  
-    <a href="../../GraphQL/Language/ASTNode.html#children-instance-method" class="tooltip">
-      <span>children</span>
-    children</a>, 
-    
-  
-    <a href="../../GraphQL/Language/ASTNode.html#column%3AInt32%7CNil-instance-method" class="tooltip">
-      <span>column : Int32 | Nil</span>
-    column</a>, 
-    
-  
-    <a href="../../GraphQL/Language/ASTNode.html#column%3D%28column%3AInt32%7CNil%29-instance-method" class="tooltip">
-      <span>column=(column : Int32 | Nil)</span>
-    column=</a>, 
-    
-  
-    <a href="../../GraphQL/Language/ASTNode.html#line%3AInt32%7CNil-instance-method" class="tooltip">
-      <span>line : Int32 | Nil</span>
-    line</a>, 
-    
-  
-    <a href="../../GraphQL/Language/ASTNode.html#line%3D%28line%3AInt32%7CNil%29-instance-method" class="tooltip">
-      <span>line=(line : Int32 | Nil)</span>
-    line=</a>, 
-    
-  
-    <a href="../../GraphQL/Language/ASTNode.html#visit%28block%3AASTNode-%3E_%29-instance-method" class="tooltip">
-      <span>visit(block : ASTNode -> _)</span>
-    visit</a>
-    
-  
-
-
-      
-
-  <h3>Constructor methods inherited from class <code><a href="../../GraphQL/Language/ASTNode.html">GraphQL::Language::ASTNode</a></code></h3>
-  
-  
-    <a href="../../GraphQL/Language/ASTNode.html#new%28line%3AInt32%7CNil%3Dnil%2Ccolumn%3AInt32%7CNil%3Dnil%29-class-method" class="tooltip">
-      <span>new(line : Int32 | Nil = <span class="n">nil</span>, column : Int32 | Nil = <span class="n">nil</span>)</span>
-    new</a>
-    
-  
-
-
-      
-
-
-      
-
-  <h3>Macros inherited from class <code><a href="../../GraphQL/Language/ASTNode.html">GraphQL::Language::ASTNode</a></code></h3>
-  
-  
-    <a href="../../GraphQL/Language/ASTNode.html#values%28args%29-macro" class="tooltip">
-      <span>values(args)</span>
-    values</a>
-    
-  
-
-
     
       
 
@@ -791,12 +719,26 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(arguments,**rest)-class-method">
+    <div class="entry-detail" id="new(schema:GraphQL::Schema,socket:HTTP::WebSocket,&amp;context:-&gt;GraphQL::Context)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(arguments, **rest)
+        def self.<strong>new</strong>(schema : <a href="../../GraphQL/Schema.html">GraphQL::Schema</a>, socket : HTTP::WebSocket, &context :  -> <a href="../../GraphQL/Context.html">GraphQL::Context</a>)
 
-        <a class="method-permalink" href="#new%28arguments%2C%2A%2Arest%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28schema%3AGraphQL%3A%3ASchema%2Csocket%3AHTTP%3A%3AWebSocket%2C%26context%3A-%3EGraphQL%3A%3AContext%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(schema:GraphQL::Schema,socket:HTTP::WebSocket)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(schema : <a href="../../GraphQL/Schema.html">GraphQL::Schema</a>, socket : HTTP::WebSocket)
+
+        <a class="method-permalink" href="#new%28schema%3AGraphQL%3A%3ASchema%2Csocket%3AHTTP%3A%3AWebSocket%29-class-method">#</a>
       </div>
       
       <br/>
@@ -812,137 +754,6 @@
   
 
   
-  <h2>
-    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="==(other:self)-instance-method">
-      <div class="signature">
-        
-        def <strong>==</strong>(other : <span class="k">self</span>)
-
-        <a class="method-permalink" href="#%3D%3D%28other%3Aself%29-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from class Reference
-            </div>
-          
-          <p>Returns <code>true</code> if this reference is the same as <em>other</em>. Invokes <code>same?</code>.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="arguments:Array(Argument)-instance-method">
-      <div class="signature">
-        
-        def <strong>arguments</strong> : Array(<a href="../../GraphQL/Language/Argument.html">Argument</a>)
-
-        <a class="method-permalink" href="#arguments%3AArray%28Argument%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="arguments=(arguments:Array(Argument))-instance-method">
-      <div class="signature">
-        
-        def <strong>arguments=</strong>(arguments : Array(<a href="../../GraphQL/Language/Argument.html">Argument</a>))
-
-        <a class="method-permalink" href="#arguments%3D%28arguments%3AArray%28Argument%29%29-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="children-instance-method">
-      <div class="signature">
-        
-        def <strong>children</strong>
-
-        <a class="method-permalink" href="#children-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="hash(hasher)-instance-method">
-      <div class="signature">
-        
-        def <strong>hash</strong>(hasher)
-
-        <a class="method-permalink" href="#hash%28hasher%29-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-            <div class="doc-inherited">
-              Description copied from class Reference
-            </div>
-          
-          <p>See <code>Object#hash(hasher)</code></p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="to_h-instance-method">
-      <div class="signature">
-        
-        def <strong>to_h</strong>
-
-        <a class="method-permalink" href="#to_h-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>@return [Hash&lt;String, Any&gt;] Recursively turn this input object into a Ruby Hash</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="to_value-instance-method">
-      <div class="signature">
-        
-        def <strong>to_value</strong>
-
-        <a class="method-permalink" href="#to_value-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-
 
 
 </div>
