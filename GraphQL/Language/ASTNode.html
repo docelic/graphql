@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Crystal Docs 1.20.3">
-<meta name="crystal_docs.project_version" content="0.7.2">
+<meta name="crystal_docs.project_version" content="0.8.0">
 <meta name="crystal_docs.project_name" content="graphql">
 
 
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="graphql">
-  <title>GraphQL::Language::ASTNode - graphql 0.7.2</title>
+  <title>GraphQL::Language::ASTNode - graphql 0.8.0</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -45,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        0.7.2
+        0.8.0
       </span>
     </div>
   </div>
@@ -102,8 +102,18 @@
       
     </li>
   
-  <li class=" " data-id="graphql/GraphQL/Error" data-name="graphql::error">
+  <li class="parent " data-id="graphql/GraphQL/Error" data-name="graphql::error">
       <a href="../../GraphQL/Error.html">Error</a>
+      
+        <ul>
+  
+  <li class=" " data-id="graphql/GraphQL/Error/Location" data-name="graphql::error::location">
+      <a href="../../GraphQL/Error/Location.html">Location</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -124,6 +134,11 @@
   
   <li class=" " data-id="graphql/GraphQL/InputObjectType" data-name="graphql::inputobjecttype">
       <a href="../../GraphQL/InputObjectType.html">InputObjectType</a>
+      
+    </li>
+  
+  <li class=" " data-id="graphql/GraphQL/Interface" data-name="graphql::interface">
+      <a href="../../GraphQL/Interface.html">Interface</a>
       
     </li>
   
@@ -492,6 +507,11 @@
       
     </li>
   
+  <li class=" " data-id="graphql/GraphQL/Union" data-name="graphql::union">
+      <a href="../../GraphQL/Union.html">Union</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -601,6 +621,23 @@
 
 
   
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28line%3AInt32%7CNil%3Dnil%2Ccolumn%3AInt32%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(line : Int32 | Nil = <span class="n">nil</span>, column : Int32 | Nil = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+  </ul>
+
 
   
 
@@ -636,6 +673,30 @@
     
       <li class="entry-summary">
         <a href="#children-instance-method" class="signature"><strong>#children</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#column%3AInt32%7CNil-instance-method" class="signature"><strong>#column</strong> : Int32 | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#column%3D%28column%3AInt32%7CNil%29-instance-method" class="signature"><strong>#column=</strong>(column : Int32 | Nil)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#line%3AInt32%7CNil-instance-method" class="signature"><strong>#line</strong> : Int32 | Nil</a>
+        
+          <div class="summary"><p>1-based position in the query source, set by the parser on the nodes that errors refer to.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#line%3D%28line%3AInt32%7CNil%29-instance-method" class="signature"><strong>#line=</strong>(line : Int32 | Nil)</a>
+        
+          <div class="summary"><p>1-based position in the query source, set by the parser on the nodes that errors refer to.</p></div>
         
       </li>
     
@@ -679,6 +740,30 @@
   </div>
 
   
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(line:Int32|Nil=nil,column:Int32|Nil=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(line : Int32 | Nil = <span class="n">nil</span>, column : Int32 | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28line%3AInt32%7CNil%3Dnil%2Ccolumn%3AInt32%7CNil%3Dnil%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
 
   
 
@@ -725,6 +810,74 @@
 
         <a class="method-permalink" href="#children-instance-method">#</a>
       </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="column:Int32|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>column</strong> : Int32 | Nil
+
+        <a class="method-permalink" href="#column%3AInt32%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="column=(column:Int32|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>column=</strong>(column : Int32 | Nil)
+
+        <a class="method-permalink" href="#column%3D%28column%3AInt32%7CNil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="line:Int32|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>line</strong> : Int32 | Nil
+
+        <a class="method-permalink" href="#line%3AInt32%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>1-based position in the query source, set by the parser on the
+nodes that errors refer to.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="line=(line:Int32|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>line=</strong>(line : Int32 | Nil)
+
+        <a class="method-permalink" href="#line%3D%28line%3AInt32%7CNil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>1-based position in the query source, set by the parser on the
+nodes that errors refer to.</p>
+        </div>
       
       <br/>
       <div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Crystal Docs 1.20.3">
-<meta name="crystal_docs.project_version" content="0.7.2">
+<meta name="crystal_docs.project_version" content="0.8.0">
 <meta name="crystal_docs.project_name" content="graphql">
 
 
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="js/doc.js"></script>
 
   <meta name="repository-name" content="graphql">
-  <title>graphql 0.7.2</title>
+  <title>graphql 0.8.0</title>
   <script type="text/javascript">
   CrystalDocs.base_path = "";
   </script>
@@ -45,7 +45,7 @@
       </h1>
 
       <span class="project-version">
-        0.7.2
+        0.8.0
       </span>
     </div>
   </div>
@@ -102,8 +102,18 @@
       
     </li>
   
-  <li class=" " data-id="graphql/GraphQL/Error" data-name="graphql::error">
+  <li class="parent " data-id="graphql/GraphQL/Error" data-name="graphql::error">
       <a href="GraphQL/Error.html">Error</a>
+      
+        <ul>
+  
+  <li class=" " data-id="graphql/GraphQL/Error/Location" data-name="graphql::error::location">
+      <a href="GraphQL/Error/Location.html">Location</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -124,6 +134,11 @@
   
   <li class=" " data-id="graphql/GraphQL/InputObjectType" data-name="graphql::inputobjecttype">
       <a href="GraphQL/InputObjectType.html">InputObjectType</a>
+      
+    </li>
+  
+  <li class=" " data-id="graphql/GraphQL/Interface" data-name="graphql::interface">
+      <a href="GraphQL/Interface.html">Interface</a>
       
     </li>
   
@@ -492,6 +507,11 @@
       
     </li>
   
+  <li class=" " data-id="graphql/GraphQL/Union" data-name="graphql::union">
+      <a href="GraphQL/Union.html">Union</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -755,7 +775,87 @@ It must define a constructor with a <code><a href="GraphQL/Field.html">GraphQL::
     <use href="#octicon-link"/>
   </svg>
 </a>Interfaces</h2>
-<p>Interfaces are not supported.</p>
+<p>An interface is an abstract class or a module with a <code><a href="GraphQL/Interface.html">GraphQL::Interface</a></code>
+annotation. Its fields are <code><a href="GraphQL/Field.html">GraphQL::Field</a></code> methods, abstract or not. Objects
+that inherit from the class or include the module implement the interface,
+and fields may return the interface type:</p>
+<pre><code class="language-crystal">@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Interface</span>]
+<span class="k">abstract</span> <span class="k">class</span> <span class="t">Character</span> <span class="o">&lt;</span> <span class="t">GraphQL</span><span class="t">::</span><span class="t">BaseObject</span>
+  @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>]
+  <span class="k">abstract</span> <span class="k">def</span> <span class="m">name</span> : <span class="t">String</span>
+<span class="k">end</span>
+
+@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Object</span>]
+<span class="k">class</span> <span class="t">Human</span> <span class="o">&lt;</span> <span class="t">Character</span>
+  @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>]
+  <span class="k">def</span> <span class="m">name</span> : <span class="t">String</span>
+    <span class="s">&quot;Luke&quot;</span>
+  <span class="k">end</span>
+
+  @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>]
+  <span class="k">def</span> <span class="m">home_planet</span> : <span class="t">String</span>
+    <span class="s">&quot;Tatooine&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Object</span>]
+<span class="k">class</span> <span class="t">Query</span> <span class="o">&lt;</span> <span class="t">GraphQL</span><span class="t">::</span><span class="t">BaseQuery</span>
+  @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>]
+  <span class="k">def</span> <span class="m">hero</span> : <span class="t">Character</span>
+    <span class="t">Human</span>.new
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+<p>Every object implementing an interface is part of the schema as soon as the
+interface is. Fields specific to one implementation are selected through
+fragments with a type condition, and <code>__typename</code> reports the concrete type:</p>
+<pre><code class="language-graphql">{
+  hero {
+    __typename
+    name
+    ... on Human {
+      homePlanet
+    }
+  }
+}</code></pre>
+<h2><a id="unions" class="anchor" href="#unions">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Unions</h2>
+<p>A union is a module with a <code><a href="GraphQL/Union.html">GraphQL::Union</a></code> annotation. Objects that include
+the module are its member types. A union has no fields of its own, so
+selections on it must go through type conditions:</p>
+<pre><code class="language-crystal">@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Union</span>]
+<span class="k">module</span> <span class="t">SearchResult</span>
+<span class="k">end</span>
+
+@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Object</span>]
+<span class="k">class</span> <span class="t">Human</span> <span class="o">&lt;</span> <span class="t">GraphQL</span><span class="t">::</span><span class="t">BaseObject</span>
+  <span class="k">include</span> <span class="t">SearchResult</span>
+  <span class="c"># ...</span>
+<span class="k">end</span>
+
+@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Object</span>]
+<span class="k">class</span> <span class="t">Starship</span> <span class="o">&lt;</span> <span class="t">GraphQL</span><span class="t">::</span><span class="t">BaseObject</span>
+  <span class="k">include</span> <span class="t">SearchResult</span>
+  <span class="c"># ...</span>
+<span class="k">end</span>
+
+@[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Object</span>]
+<span class="k">class</span> <span class="t">Query</span> <span class="o">&lt;</span> <span class="t">GraphQL</span><span class="t">::</span><span class="t">BaseQuery</span>
+  @[<span class="t">GraphQL</span><span class="t">::</span><span class="t">Field</span>]
+  <span class="k">def</span> <span class="m">search</span>(text : <span class="t">String</span>) : <span class="t">Array</span>(<span class="t">SearchResult</span>)
+    [<span class="t">Human</span>.new, <span class="t">Starship</span>.new] <span class="k">of</span> <span class="t">SearchResult</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+<pre><code class="language-graphql">{
+  search(text: &quot;a&quot;) {
+    __typename
+    ... on Human { name }
+    ... on Starship { length }
+  }
+}</code></pre>
+<p>Both annotations accept <code>name</code> and <code>description</code> like <code><a href="GraphQL/Object.html">GraphQL::Object</a></code>.</p>
 <h2><a id="subscriptions" class="anchor" href="#subscriptions">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
